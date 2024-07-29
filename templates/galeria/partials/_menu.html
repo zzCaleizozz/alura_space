@@ -1,7 +1,7 @@
 {% load static %}
 <div class="pagina-inicial">
     <header class="cabecalho">
-        <img src="{% static '/assets/logo/Logo(2).png' %}" alt="Logo da Alura Space" />
+        <a href="{% url 'index' %}"><img src="{% static '/assets/logo/Logo(2).png' %}" alt="Logo da Alura Space"> </a>
         <div class="cabecalho__busca">
             <div class="busca__fundo">
                 <input class="busca__input" type="text" placeholder="O que você procura?">
@@ -12,7 +12,6 @@
     <main class="principal">
         <section class="menu-lateral">
             <nav class="menu-lateral__navegacao">
-                <a href="{% url 'index' %}"><img src="{% static '/assets/ícones/1x/Home - ativo.png' %}"> Home</a>
                 <a href="#"><img src="{% static '/assets/ícones/1x/Mais vistas - inativo.png' %}"> Mais vistas</a>
                 <a href="#"><img src="{% static '/assets/ícones/1x/Novas - inativo.png' %}"> Novas</a>
                 <a href="#"><img src="{% static '/assets/ícones/1x/Surpreenda-me - inativo.png' %}"> Surpreenda-me</a>
