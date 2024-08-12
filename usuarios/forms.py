@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 
 class LoginForms(forms.Form):
@@ -61,9 +62,9 @@ class CadastroForms(forms.Form):
         attrs={
             'class': 'form-control',
             'placeholder': 'Ex.: Digite sua senha'
-        }
-    ),
-)
+            }
+        ),
+    )
     senha2=forms.CharField(
     label='Confirme sua senha',
     required=True,
@@ -72,6 +73,26 @@ class CadastroForms(forms.Form):
         attrs={
             'class': 'form-control',
             'placeholder': 'Ex.: Digite sua senha mais uma vez'
-        }
-    ),
-)
+            }
+        ),
+    )
+    
+    def clean_nomecadastro(self):
+        nome = self.cleaned_data.get('nomecadastro')
+        if nome:
+            nome = nome.strip()
+            if ' ' in nome:
+                raise forms.ValidationError("Não é possivel inserir espaços dentro do campo usuário")
+            else:
+                return nome
+    
+
+    def clean_senha2(self):
+        senha1 = self.cleaned_data.get('senha1')
+        senha2 = self.cleaned_data.get('senha2')
+
+        if senha1 and senha2:
+            if senha1 != senha2:
+                raise forms.ValidationError('As senhas não coincidem')
+        else:
+            return senha2

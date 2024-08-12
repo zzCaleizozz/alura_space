@@ -33,23 +33,19 @@ def login(request):
 
 
 def cadastro(request):
-    form2 = CadastroForms()
+    form = CadastroForms()
 
     if request.method == 'POST':
         form = CadastroForms(request.POST)
 
         if form.is_valid():
-            if form['senha1'].value() != form['senha2'].value():
-                    messages.error(request, 'senhas não correspondem')
-                    return redirect('cadastro')
-            
             nome=form['nomecadastro'].value()
             email=form['emailcadastro'].value()
             senha1=form['senha1'].value()
 
             if User.objects.filter(username=nome).exists():
-                messages.error('Usuário ja existente')
-                redirect('cadastro')
+                messages.error(request, 'Usuário ja existente')
+                return redirect('cadastro')
 
             usuario = User.objects.create_user(
                 username=nome,
@@ -59,10 +55,12 @@ def cadastro(request):
             usuario.save()
             messages.success(request, 'Cadastro efetuado com sucesso')
             return redirect('login')
-    return render(request, 'usuarios/cadastro.html', {'form': form2})
+    return render(request, 'usuarios/cadastro.html', {'form': form})
 
 
 def logout(request):
     auth.logout(request)
     messages.success(request, 'logout efetuado com sucesso')
     return redirect('login')
+
+
